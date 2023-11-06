@@ -6,5 +6,6 @@ users_list:list = [
     {'name': 'Andrew', 'nick': 'Tate', 'posts': 556},
     {'name': 'Tristan', 'nick': 'Tati', 'posts': 34},
     {'name': 'Tomasz', 'nick': 'Kocu', 'posts': 32},
-    {'name': 'Karol', 'nick': 'Laska', 'posts': 69}
+    {'name': 'Karol', 'nick': 'Laska', 'posts': 69},
+    {'name': 'Agata', 'nick': 'Agaciu', 'posts': 5283547},
 ]
