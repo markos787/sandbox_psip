@@ -1,5 +1,6 @@
 users_list:list = [
     {'name': 'Marek', 'nick': 'Wise', 'posts': 5},
+    {'name': 'Marek', 'nick': 'wysz', 'posts': 100},
     {'name': 'Adam', 'nick': 'dobry', 'posts': 1},
     {'name': 'Bartek', 'nick': 'barto', 'posts': 1},
     {'name': 'Antek', 'nick': 'Macio', 'posts': 30},
