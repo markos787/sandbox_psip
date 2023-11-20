@@ -35,6 +35,20 @@ def show_users(users_list:list)->None:
     for user in users_list:
         print(f'Twoj znajomy {user['nick']} opublikowal {user['posts']} postow')
 
+
+def update_user(users_list: list[dict, dict]) -> None:
+    nick_of_user = input('Podaj nick do mdyfikacji')
+    print(nick_of_user)
+    for user in users_list:
+        if user['nick'] == nick_of_user:
+            print('Znaleziono')
+            user['name'] = input('podaj nowe imie: ')
+            user['nick'] = input('podaj nowe ksywe: ')
+            user['posts'] =int(input('podaj liczbw postów: '))
+
+# update_user(users_list)
+#     for user in users_list:
+#     print(user)
 def gui(users_list:list)->None:
     while True:
         print(f'MENU \n'
@@ -62,4 +76,7 @@ def gui(users_list:list)->None:
                 remove_user_from(users_list)
             case'4':
                 print('Modyfikuj uzytkownika')
-                print('To bedzie zrobione') # TODO add a function
+                update_user(users_list)
+
+
+
