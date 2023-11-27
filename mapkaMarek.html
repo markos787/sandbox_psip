@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_03976f77904a597d14c22cf4509a333b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_03976f77904a597d14c22cf4509a333b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_03976f77904a597d14c22cf4509a333b = L.map(
+                "map_03976f77904a597d14c22cf4509a333b",
+                {
+                    center: [52.3, 21.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 7,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e9927f2f9d89de4b166a46c981df0801 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+                tile_layer_e9927f2f9d89de4b166a46c981df0801.addTo(map_03976f77904a597d14c22cf4509a333b);
+    
+            var marker_ef7e26f95a1a43c4f7b35cdf5052dec8 = L.marker(
+                [50.720556, 23.258611],
+                {}
+            ).addTo(map_03976f77904a597d14c22cf4509a333b);
+        
+    
+        var popup_46fbc437cfc4a20c8d3018653ed66266 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d84feb467274207fcc71253e45a343a1 = $(`<div id="html_d84feb467274207fcc71253e45a343a1" style="width: 100.0%; height: 100.0%;">Użytkownik: Marek Liczba postow: 5</div>`)[0];
+                popup_46fbc437cfc4a20c8d3018653ed66266.setContent(html_d84feb467274207fcc71253e45a343a1);
+            
+        
+
+        marker_ef7e26f95a1a43c4f7b35cdf5052dec8.bindPopup(popup_46fbc437cfc4a20c8d3018653ed66266)
+        ;
+
+        
+    
+    
+            var marker_575ae9c63d51b24f69823be0253aca8b = L.marker(
+                [51.25, 22.566667],
+                {}
+            ).addTo(map_03976f77904a597d14c22cf4509a333b);
+        
+    
+        var popup_ef45325748c92e945a2224a9c701e98c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d240c5e2b69b9a500fd87fa3bae0143e = $(`<div id="html_d240c5e2b69b9a500fd87fa3bae0143e" style="width: 100.0%; height: 100.0%;">Użytkownik: Marek Liczba postow: 100</div>`)[0];
+                popup_ef45325748c92e945a2224a9c701e98c.setContent(html_d240c5e2b69b9a500fd87fa3bae0143e);
+            
+        
+
+        marker_575ae9c63d51b24f69823be0253aca8b.bindPopup(popup_ef45325748c92e945a2224a9c701e98c)
+        ;
+
+        
+    
+</script>
+</html>
