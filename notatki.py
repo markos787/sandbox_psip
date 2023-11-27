@@ -19,7 +19,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-item=['Warszawa','Brodnica']
+city=['Warszawa','Brodnica', 'Iława']
 
 def get_coordinates(city:str)->list[float,float]:
     # pobieranie strony internetowej
@@ -37,5 +37,16 @@ def get_coordinates(city:str)->list[float,float]:
 
     return [response_html_lat,response_html_long]
 
-for item in item:
-    print(get_coordinates(item))
+# for item in city:
+#     print(get_coordinates(item))
+
+
+###RYSOWANIE MAPY
+import folium
+
+#zwrócić mapę z pinezką odnoszącą się do wskazanego użytkownika podanego z klawiatury
+#zwrócić mapę z wszystkimi użytkownikami z danej listy (znajomymi)
+map=folium.Map(location=[52.3,21.0],tiles='OpenStreetMap', zoom_start=7) #location to miejsce wycentrowania mapy
+for item in city:
+    folium.Marker(location=get_coordinates(city=item),popup='Why are you gay?').add_to(map)
+map.save('mapka.html')
