@@ -1,18 +1,16 @@
-# from dane import users_list
-#
-# #nick_of_user = input('podaj nick użytkownika do modyfikacji')
-# #print(nick_of_user)
-# def update_user(users_list: list[dict, dict]) -> None:
-#     nick_of_user = input('podaj nick użytkownika do modyfikacji')
-#     print(nick_of_user)
-#     for user in users_list:
-#         if user['nick'] == nick_of_user:
-#             print('Znaleziono')
-#             user['name'] = input('podaj nowe imie: ')
-#             user['nick'] = input('podaj nowe ksywe: ')
-#             user['posts'] =int(input('podaj liczbw postów: '))
-#
-# update_user(users_list)
-# for user in users_list:
-#     print(user)
+import requests
+class User:
+    def __init__(self, miasto):
+        self.miasto = miasto
+    def pogoda_z(self,miasto: str):
+        URL = f'https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}'
+        return requests.get(URL).json()
 
+
+npc_1=User(miasto='warszawa')
+npc_2=User(miasto='zamosc')
+print(npc_1.miasto)
+print(npc_2.miasto)
+
+print(npc_1.pogoda_z(npc_1.miasto))
+print(npc_2.pogoda_z(npc_2.miasto))
