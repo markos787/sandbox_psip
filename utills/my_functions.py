@@ -1,4 +1,16 @@
-def add_user_to(users_list:list)->None:
+import psycopg2 as ps
+
+db_params=ps.connect(
+    database='postgres',
+    user='postgres',
+    password='Geodeta102!',
+    host='localhost',
+    port=5433
+)
+
+cursor=db_params.cursor()
+
+def add_user_to()->None:
     """ #3 razy podwójny apostrof
     add object to list
     :param users_list: list - user list
@@ -8,55 +20,58 @@ def add_user_to(users_list:list)->None:
     posts = input('podaj posty')
     nick=input('podaj nick')
     city=input('podaj miasto')
-    users_list.append({'name': name, 'nick': nick, 'posts': posts, 'city':city})
-
-def remove_user_from(users_list: list)->None:
+    sql_query_1 = f"INSERT INTO public.facebook(city, name, nick, posts) VALUES ('{city}', '{name}', '{nick}', '{posts}');"
+    cursor.execute(sql_query_1)
+    db_params.commit()
+def remove_user_from()->None:
     """
     remove custom object from list
     :param users_list: list - user list
     :return: None
     """
-    tmp_list = []
-    name = input('kogo zabic, szefie? ')
-    for user in users_list:
-        if user['name'] == name:
-            tmp_list.append(user)
+    name = input('kogo zabic, szefie? (podaj imię) ')
+    sql_query_1 = f"SELECT * FROM public.facebook WHERE name='{name}';"
+    cursor.execute(sql_query_1)
+    query_result=cursor.fetchall()
     print(f'znaleziono ')
     print('0: usun wszystkich znalezionycyh userow')
-    for numerek, user_to_be_removed in enumerate(tmp_list):
+    for numerek, user_to_be_removed in enumerate(query_result):
         print(f'{numerek + 1}. {user_to_be_removed}')
     numer = int(input(f'wybierz usera do usuniecia '))
     if numer == 0:
-        for user in tmp_list:
-            users_list.remove(user)
+        sql_query_2 = f"DELETE * FROM public.facebook;"
+        cursor.execute(sql_query_2)
+        db_params.commit()
     else:
-        users_list.remove(tmp_list[numer - 1])
+        sql_query_2 = f"DELETE FROM public.facebook WHERE name='{query_result[numer - 1][2]}';"
+        cursor.execute(sql_query_2)
+        db_params.commit()
 
-def show_users(users_list:list)->None:
-    for user in users_list:
-        print(f'Twoj znajomy {user['nick']} opublikowal {user['posts']} postow')
+def show_users()->None:
+    sql_query_1 = f"SELECT * FROM public.facebook;"
+    cursor.execute(sql_query_1)
+    query_result=cursor.fetchall()
+    for row in query_result:
+        print(f'Twoj znajomy {row[2]} opublikowal {row[4]} postow')
 
-
-def update_user(users_list: list[dict, dict]) -> None:
-    nick_of_user = input('Podaj nick do mdyfikacji')
-    print(nick_of_user)
-    for user in users_list:
-        if user['nick'] == nick_of_user:
-            print('Znaleziono')
-            user['name'] = input('podaj nowe imie: ')
-            user['nick'] = input('podaj nowe ksywe: ')
-            user['posts'] =int(input('podaj liczbw postów: '))
-            user['city']= input('podaj miasto: ')
-
-# update_user(users_list)
-#     for user in users_list:
-#     print(user)
+def update_user() -> None:
+    nick_of_user = input('Podaj nick gościa do mdyfikacji')
+    sql_query_1 = f"SELECT * FROM public.facebook WHERE nick='{nick_of_user}';"
+    cursor.execute(sql_query_1)
+    query_result=cursor.fetchall()
+    print('Znaleziono')
+    name = input('podaj nowe imie: ')
+    nick = input('podaj nowe ksywe: ')
+    posts =int(input('podaj liczbw postów: '))
+    city= input('podaj miasto: ')
+    sql_query_1 = f"UPDATE public.facebook SET name='{name}',nick='{nick}', posts='{posts}', city='{city}' WHERE nick='{nick_of_user}';"
+    cursor.execute(sql_query_1)
+    db_params.commit()
 
 # ==================================== MAPA
 import requests
 from bs4 import BeautifulSoup
 import folium
-from dane import users_list
 def get_coordinates(city:str)->list[float,float]:
     # pobieranie strony internetowej
     adres_url=f'https://pl.wikipedia.org/wiki/{city}'
@@ -72,30 +87,38 @@ def get_coordinates(city:str)->list[float,float]:
     response_html_long=float(response_html_long.replace(',','.'))
 
     return [response_html_lat,response_html_long]
-def get_map_one_user(user:str)->None:
-    city=get_coordinates(user['city'])
+def get_map_one_user()->None:
+    city=input('Podaj miasto usera: ')
+    sql_query_1 = f"SELECT * FROM public.facebook WHERE city='{city}';"
+    cursor.execute(sql_query_1)
+    query_result=cursor.fetchall()
+    city=get_coordinates(city)
     map = folium.Map(location=city,
                      tiles='OpenStreetMap',
                      zoom_start=14
                      )  # location to miejsce wycentrowania mapy
-    folium.Marker(location=city,
-                  popup=f'Użytkownik: {user["name"]}\n'
-                  f'Liczba postow: {user['posts']}'
-                  ).add_to(map)
-    map.save(f'mapka_{user['name']}.html')
-def get_map_of(users:list[dict,dict])->None:
+    for user in query_result:
+        folium.Marker(location=city,
+                      popup=f'Użytkownik: {user[2]}\n'
+                      f'Liczba postow: {user[4]}'
+                      ).add_to(map)
+    map.save(f'mapka_{query_result[0][1]}.html')
+def get_map_of()->None:
     map = folium.Map(location=[52.3,21.0],
                      tiles='OpenStreetMap',
                      zoom_start=7
                      )  # location to miejsce wycentrowania mapy
-    for user in users_list:
-        folium.Marker(location=get_coordinates(city=user['city']),
-                      popup=f'Użytkownik: {user["name"]}\n'
-                      f'Liczba postow: {user['posts']}'
+    sql_query_1 = f"SELECT * FROM public.facebook;"
+    cursor.execute(sql_query_1)
+    query_result=cursor.fetchall()
+    for user in query_result:
+        folium.Marker(location=get_coordinates(city=user[1]),
+                      popup=f'Użytkownik: {user[2]}\n'
+                      f'Liczba postow: {user[4]}'
                       ).add_to(map)
         map.save('mapka.html')
 #========================END OF MAP
-def gui(users_list:list)->None:
+def gui()->None:
     while True:
         print(f'MENU \n'
               f'0: Zakoncz program \n'
@@ -115,27 +138,43 @@ def gui(users_list:list)->None:
                 break
             case'1':
                 print('Wyswietl uzytkownikow')
-                show_users(users_list)
+                show_users()
             case'2':
                 print('Dodaj uzytkownika')
-                add_user_to(users_list)
+                add_user_to()
             case'3':
                 print('Usun uzytkownika')
-                remove_user_from(users_list)
+                remove_user_from()
             case'4':
                 print('Modyfikuj uzytkownika')
-                update_user(users_list)
+                update_user()
             case'5':
                 print('Rysuję mapę z użytkownikiem')
-                user=input("Podaj nazwę użytkownika do modyfikacji")
-                for item in users_list:
-                    if item['name']==user:
-                        get_map_one_user(item)
+                get_map_one_user()
             case'6':
                 print('Rysuję mapę z wszystkimi użytkownikami')
-                get_map_of(users_list)
+                get_map_of()
 
 import requests as rq
 def pogoda_z(miasto: str):
     URL = f'https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}'
     return rq.get(URL).json()
+
+import requests
+class User:
+    def __init__(self, city, name, nick, posts):
+        self.city = city
+        self.name=name
+        self.nick=nick
+        self.posts=posts
+    def pogoda_z(self,miasto: str):
+        URL = f'https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}'
+        return requests.get(URL).json()
+
+npc_1=User(city='warszawa', name='Marek', nick='Wise', posts=123)
+npc_2=User(city='zamosc')
+print(npc_1.city)
+print(npc_2.city)
+
+print(npc_1.pogoda_z(npc_1.city))
+print(npc_2.pogoda_z(npc_2.city))

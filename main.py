@@ -1,14 +1,7 @@
-from dane import users_list
-from utills.my_functions import add_user_to, remove_user_from, show_users,update_user, gui
+from utills.my_functions import gui
 
-# add_user_to(users_list)
-# remove_user_from(users_list)
-# show_users(users_list)
-gui(users_list)
+gui()
 
-#  TODO dodać tabelę do bazy danych reprezentującą użytkownika
-#  TODO włączyć do kodu aktualnego obsługę bazy danych - wszystkie funkcjonalności mają się dziać na bazie danych
-#  TODO napisać klasę użytkownika o strukturze zgodnej z tą zdefiniowaną w dane.py
 #  TODO oddać sprawozdanie z powyższego do dnia 20.12 (środa)
 #  TODO strona tytułowa, spis treści, opis kodu realizującego zadanie rysowania mapy uwzględniający poszczególne funkcje i ich składnie, podsumowanie i wnioski końcowe, screeny i zdjęcia mile widziane (ale nie kodu).
 #  TODO zrealizowany kod na git - załącznik
