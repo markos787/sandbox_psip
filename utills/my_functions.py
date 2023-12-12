@@ -1,4 +1,7 @@
 import psycopg2 as ps
+import requests as rq
+from bs4 import BeautifulSoup
+import folium
 
 db_params=ps.connect(
     database='postgres',
@@ -58,25 +61,21 @@ def update_user() -> None:
     nick_of_user = input('Podaj nick gościa do mdyfikacji')
     sql_query_1 = f"SELECT * FROM public.facebook WHERE nick='{nick_of_user}';"
     cursor.execute(sql_query_1)
-    query_result=cursor.fetchall()
     print('Znaleziono')
     name = input('podaj nowe imie: ')
     nick = input('podaj nowe ksywe: ')
     posts =int(input('podaj liczbw postów: '))
     city= input('podaj miasto: ')
-    sql_query_1 = f"UPDATE public.facebook SET name='{name}',nick='{nick}', posts='{posts}', city='{city}' WHERE nick='{nick_of_user}';"
-    cursor.execute(sql_query_1)
+    sql_query_2 = f"UPDATE public.facebook SET name='{name}',nick='{nick}', posts='{posts}', city='{city}' WHERE nick='{nick_of_user}';"
+    cursor.execute(sql_query_2)
     db_params.commit()
 
 # ==================================== MAPA
-import requests
-from bs4 import BeautifulSoup
-import folium
 def get_coordinates(city:str)->list[float,float]:
     # pobieranie strony internetowej
     adres_url=f'https://pl.wikipedia.org/wiki/{city}'
 
-    response=requests.get(url=adres_url) #zwraca obiekt, wywołany jest status
+    response=rq.get(url=adres_url) #zwraca obiekt, wywołany jest status
     response_html=BeautifulSoup(response.text, 'html.parser') #zwraca tekst kodu strony internetowej, zapisany w html
 
     #pobieranie współrzędnych
@@ -155,12 +154,10 @@ def gui()->None:
                 print('Rysuję mapę z wszystkimi użytkownikami')
                 get_map_of()
 
-import requests as rq
 def pogoda_z(miasto: str):
     URL = f'https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}'
     return rq.get(URL).json()
 
-import requests
 class User:
     def __init__(self, city, name, nick, posts):
         self.city = city
@@ -169,10 +166,10 @@ class User:
         self.posts=posts
     def pogoda_z(self,miasto: str):
         URL = f'https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}'
-        return requests.get(URL).json()
+        return rq.get(URL).json()
 
 npc_1=User(city='warszawa', name='Marek', nick='Wise', posts=123)
-npc_2=User(city='zamosc')
+npc_2=User(city='zamosc',  name='Andrew', nick='Tate', posts=888)
 print(npc_1.city)
 print(npc_2.city)
 
