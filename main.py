@@ -3,7 +3,6 @@ from utills.my_functions import gui
 gui()
 
 #  TODO oddać sprawozdanie z powyższego do dnia 20.12 (środa)
-#  TODO strona tytułowa, spis treści, opis kodu realizującego zadanie rysowania mapy uwzględniający poszczególne funkcje i ich składnie, podsumowanie i wnioski końcowe, screeny i zdjęcia mile widziane (ale nie kodu).
 #  TODO zrealizowany kod na git - załącznik
 
 
